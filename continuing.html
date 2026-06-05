@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Continuing the Conversation with the Body — MPS Development Days 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f7f3ee;
+    --warm-white: #faf8f5;
+    --ink: #2a2420;
+    --muted: #7a6e66;
+    --accent: #8b6f5e;
+    --soft-rule: #d9cfc6;
+    --pale-terracotta: #e8d9cc;
+
+    /* Section accent colours — subtle, all in the same warm family */
+    --s1: #c4a882;   /* movement — warm amber */
+    --s2: #7a9e8e;   /* grounding — sage */
+    --s3: #c9a86c;   /* joy — golden */
+    --s4: #9e8ca0;   /* tender — dusty lavender */
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 18px; scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--warm-white);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.85;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse at 20% 20%, rgba(205,180,158,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(180,158,138,0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 4rem 2rem 6rem;
+  }
+
+  /* ── Header ── */
+  .header {
+    text-align: center;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--soft-rule);
+    margin-bottom: 3.5rem;
+  }
+
+  .overline {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.4rem;
+    display: block;
+  }
+
+  h1 {
+    font-size: 2.4rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  .header-sub {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin-top: 1rem;
+  }
+
+  /* ── Section headings ── */
+  h2 {
+    font-size: 1.45rem;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--ink);
+    margin-top: 0;
+    margin-bottom: 1.2rem;
+  }
+
+  h2::before {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 1px;
+    background: var(--accent);
+    margin-bottom: 0.9rem;
+  }
+
+  p {
+    margin-bottom: 1.3rem;
+    font-size: 1.05rem;
+  }
+
+  .pull {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--accent);
+    line-height: 1.65;
+    margin: 2.2rem 0;
+    padding-left: 1.4rem;
+    border-left: 2px solid var(--pale-terracotta);
+  }
+
+  .quiet {
+    font-size: 0.92rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .divider {
+    width: 48px;
+    height: 1px;
+    background: var(--soft-rule);
+    margin: 3rem auto;
+  }
+
+  /* ── Intro lines ── */
+  .intro-lines {
+    margin: 1.8rem 0;
+  }
+
+  .intro-lines p {
+    margin-bottom: 0.5rem;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 1rem;
+  }
+
+  /* ── Pathway cards ── */
+  .pathway-card {
+    border: 1px solid var(--soft-rule);
+    border-radius: 3px;
+    padding: 2rem 2rem 1.6rem;
+    margin-bottom: 1.6rem;
+    background: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pathway-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+  }
+
+  .card-s1::before { background: var(--s1); }
+  .card-s2::before { background: var(--s2); }
+  .card-s3::before { background: var(--s3); }
+  .card-s4::before { background: var(--s4); }
+
+  .card-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.7rem;
+    display: block;
+  }
+
+  .label-s1 { color: var(--s1); }
+  .label-s2 { color: var(--s2); }
+  .label-s3 { color: var(--s3); }
+  .label-s4 { color: var(--s4); }
+
+  .pathway-card h3 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--ink);
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  .pathway-card p {
+    font-size: 0.98rem;
+    color: var(--ink);
+    margin-bottom: 1.4rem;
+  }
+
+  /* ── Resource buttons ── */
+  .resource-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    margin-top: 0.4rem;
+  }
+
+  .resource-btn {
+    display: block;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+    background: var(--warm-white);
+    border: 1px solid var(--soft-rule);
+    border-radius: 2px;
+    padding: 0.65rem 0.9rem;
+    text-decoration: none;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    position: relative;
+  }
+
+  .resource-btn::after {
+    content: '→';
+    position: absolute;
+    right: 0.9rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8rem;
+    opacity: 0.35;
+    transition: opacity 0.2s ease, right 0.2s ease;
+  }
+
+  .resource-btn:hover {
+    background: var(--cream);
+    border-color: var(--accent);
+  }
+
+  .resource-btn:hover::after {
+    opacity: 0.7;
+    right: 0.7rem;
+  }
+
+  .resource-btn.placeholder {
+    opacity: 0.55;
+    cursor: default;
+    border-style: dashed;
+  }
+
+  .resource-btn.placeholder:hover {
+    background: var(--warm-white);
+    border-color: var(--soft-rule);
+  }
+
+  .resource-btn.placeholder::after {
+    content: '+';
+    opacity: 0.3;
+  }
+
+  .resource-btn.placeholder:hover::after {
+    right: 0.9rem;
+    opacity: 0.3;
+  }
+
+  .placeholder-note {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.62rem;
+    color: var(--muted);
+    margin-top: 0.7rem;
+    letter-spacing: 0.04em;
+    font-style: italic;
+  }
+
+  /* ── Looking ahead / further support boxes ── */
+  .soft-box {
+    background: var(--cream);
+    border: 1px solid var(--soft-rule);
+    border-radius: 3px;
+    padding: 2rem 2rem 1.6rem;
+    margin-top: 0;
+  }
+
+  .soft-box h2 { margin-top: 0; }
+  .soft-box p:last-child { margin-bottom: 0; }
+
+  /* ── Return button ── */
+  .return-wrap {
+    text-align: center;
+    margin-top: 3.5rem;
+  }
+
+  .return-btn {
+    display: inline-block;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--pale-terracotta);
+    border-radius: 2px;
+    padding: 0.8rem 1.8rem;
+    text-decoration: none;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .return-btn:hover {
+    background: var(--cream);
+    border-color: var(--accent);
+    color: var(--ink);
+  }
+
+  /* ── Signature ── */
+  .signature {
+    text-align: center;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--soft-rule);
+  }
+
+  .signature p {
+    font-size: 0.88rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 0.3rem;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 520px) {
+    html { font-size: 16px; }
+    .page { padding: 2.5rem 1.3rem 4rem; }
+    h1 { font-size: 1.9rem; }
+    .resource-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    body::before { display: none; }
+    .page { max-width: 100%; padding: 1cm 2cm; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <header class="header">
+    <span class="overline">MPS Development Days 2026 &middot; Bionic Breathwork</span>
+    <h1>Continuing the Conversation with the Body</h1>
+    <p class="header-sub">Optional practices and resources for ongoing integration</p>
+  </header>
+
+  <!-- Introduction -->
+  <section>
+    <h2>After the Session</h2>
+
+    <p>After a powerful experience, different bodies ask for different things.</p>
+
+    <div class="intro-lines">
+      <p>Some people notice energy that still wants to move.</p>
+      <p>Some notice a desire for rest.</p>
+      <p>Some feel creative, open or expansive.</p>
+      <p>Some feel tender, emotional or tired.</p>
+    </div>
+
+    <div class="pull">
+      There is no right way to integrate. The invitation is not to force anything. The invitation is to listen.
+    </div>
+
+    <p>If any of the resources below feel supportive, you are welcome to explore them. If not, that is completely okay too.</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Section 1 — Movement / Activation -->
+  <section>
+    <div class="pathway-card card-s1">
+      <span class="card-label label-s1">If you're noticing energy or activation</span>
+      <h3>Sometimes the body continues processing through movement</h3>
+      <p>You may notice energy, restlessness, a desire to stretch, walk, shake, move or simply change position more frequently. These are natural signs that the body is still in conversation with itself.</p>
+
+      <div class="resource-grid">
+        <a href="https://www.youtube.com/watch?v=BX5gFLk2CXo" target="_blank" class="resource-btn">Gentle shaking practice</a>
+        <a href="#" class="resource-btn placeholder">Free movement to music</a>
+        <a href="#" class="resource-btn placeholder">Walking in nature</a>
+        <a href="#" class="resource-btn placeholder">Stretching</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2 — Grounding -->
+  <section>
+    <div class="pathway-card card-s2">
+      <span class="card-label label-s2">If you're looking for grounding and regulation</span>
+      <h3>Sometimes the body asks for steadiness rather than intensity</h3>
+      <p>Grounding practices can help us reconnect with ourselves, our surroundings and the present moment — gently and without demand.</p>
+
+      <div class="resource-grid">
+        <a href="https://www.youtube.com/watch?v=ZXh-IGyBegQ" target="_blank" class="resource-btn">Coherent breathing</a>
+
+        <a href="#" class="resource-btn placeholder">Barefoot walking</a>
+        <a href="#" class="resource-btn placeholder">Sensory grounding</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3 — Joy / Expansion -->
+  <section>
+    <div class="pathway-card card-s3">
+      <span class="card-label label-s3">If you're noticing joy, creativity or expansion</span>
+      <h3>Not all integration involves release or difficulty</h3>
+      <p>Sometimes we encounter joy, possibility, curiosity or a renewed sense of aliveness. These states are equally valid — and equally worth listening to.</p>
+
+      <div class="resource-grid">
+        <a href="https://www.youtube.com/watch?v=kL_CTZ2Aaxk" target="_blank" class="resource-btn">Breath of Joy</a>
+        <a href="#" class="resource-btn placeholder">Dance or movement</a>
+        <a href="#" class="resource-btn placeholder">Creative expression</a>
+        <a href="#" class="resource-btn placeholder">Journalling</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4 — Tender / Rest -->
+  <section>
+    <div class="pathway-card card-s4">
+      <span class="card-label label-s4">If you're feeling tender, emotional or tired</span>
+      <h3>Sometimes the most supportive response is gentleness</h3>
+      <p>Rest is a valid form of integration. There is no need to process, analyse or arrive anywhere. Simply being present with yourself is enough.</p>
+
+      <div class="resource-grid">
+        <a href="#" class="resource-btn placeholder">Yoga Nidra</a>
+        <a href="#" class="resource-btn placeholder">Gentle stretching</a>
+        <a href="#" class="resource-btn placeholder">Rest</a>
+        <a href="#" class="resource-btn placeholder">Connection with trusted people</a>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- Further Support -->
+  <section>
+    <h2>Further Support</h2>
+
+    <p>For those interested in exploring breathwork further — whether through individual sessions, group experiences or organisational work — details will be shared separately.</p>
+
+    <p>For now, there is nothing you need to do. Simply carry with you whatever felt useful, and leave the rest.</p>
+
+    <p class="quiet">The door is simply here, if it ever feels worth opening.</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Return button -->
+  <div class="return-wrap">
+    <a href="index.html" class="return-btn">← Return to Integration Reflection</a>
+  </div>
+
+  <!-- Signature -->
+  <div class="signature">
+    <p>MPS Development Days 2026</p>
+    <p><em>Bionic Breathwork</em></p>
+  </div>
+
+</div>
+</body>
+</html>
