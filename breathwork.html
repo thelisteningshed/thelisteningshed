@@ -49,9 +49,12 @@
   .host-name { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; color: var(--plum); line-height: 1.2; }
   .host-role { font-size: 0.98rem; margin-top: 0.25rem; }
 
-  .concessions { margin: 0 auto 3rem; max-width: 460px; font-size: 1.02rem; }
-  .concessions .eyebrow { margin-bottom: 0.75rem; }
-  .concessions ul { list-style: none; margin: 0.35rem 0 1rem; }
+  .concessions { margin: 0 auto 3rem; padding: 2rem 1.5rem; border: 1px solid var(--border-gold); font-size: 1.02rem; }
+  .concessions .eyebrow { margin-bottom: 0.5rem; }
+  .conc-title { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 500; color: var(--plum); line-height: 1.2; }
+  .conc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
+  .conc-name { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; color: var(--plum); }
+  @media (max-width: 540px) { .conc-grid { grid-template-columns: 1fr; gap: 1rem; } }
   .contact { margin-top: 3rem; font-size: 1rem; color: var(--text-mid); }
 
   footer { padding: 2rem 1.5rem; text-align: center; border-top: 1px solid var(--border-plum); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-muted); }
@@ -96,12 +99,18 @@
 
   <div class="concessions" id="concessions">
     <p class="eyebrow">Concessions</p>
-    <p>A reduced rate is available if:</p>
-    <ul>
-      <li>this is your first time, or</li>
-      <li>you are coming along with a friend.</li>
-    </ul>
-    <p>To arrange it, send a message before you book:<br>
+    <p class="conc-title">Two ways to come for less</p>
+    <div class="conc-grid">
+      <div>
+        <p class="conc-name">First time</p>
+        <p>A reduced rate if this is your first session.</p>
+      </div>
+      <div>
+        <p class="conc-name">Come as a pair</p>
+        <p>A reduced rate when you book with a friend.</p>
+      </div>
+    </div>
+    <p>To arrange either, send a message before you book:<br>
       <a href="mailto:hello@thelisteningshed.co.uk?subject=Breathwork%20evening%20concession">hello@thelisteningshed.co.uk</a> · <a href="https://www.instagram.com/the.listening.shed/" target="_blank" rel="noopener">@the.listening.shed</a></p>
   </div>
 
